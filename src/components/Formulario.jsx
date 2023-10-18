@@ -5,22 +5,26 @@ function Formulario({ setAlert }) {
     const [email, setEmail] = useState('');
     const [contrasena, setContrasena] = useState('');
     const [confirmContrasena, setConfirmContrasena] = useState('');
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
     const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!email.includes('@')) {
-    setAlert({ type: 'error', message: 'Completa correctamente todos los campos' });
-    return;
+    if (!emailPattern.test(email)) {
+        setAlert({ type: 'error', message: 'Completa correctamente todos los campos' });
+        return;
     }
 
     if (contrasena !== confirmContrasena) {
-    setAlert({ type: 'danger', message: 'Las contraseñas no coinciden' });
-    return;
+        setAlert({ type: 'danger', message: 'Las contraseñas no coinciden' });
+        return;
     }
 
     setAlert({ type: 'success', message: 'Listo, ya estás registrado!' });
-
+    setNombre('')
+    setEmail('')
+    setContrasena('')
+    setConfirmContrasena('')
 };
 
 return (
@@ -48,7 +52,7 @@ return (
         type="password"
         placeholder="Confirmar Contraseña"
         value={confirmContrasena}
-    onChange={(e) => setConfirmContrasena(e.target.value)}
+        onChange={(e) => setConfirmContrasena(e.target.value)}
         />
     </div>
     <button type="submit">Registrarse</button>
